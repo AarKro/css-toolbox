@@ -1,6 +1,9 @@
 import { FC, useEffect, useState } from 'react';
+import classNames from 'classnames';
 import eyeDropperIcon from '@/assets/eyeDropper.svg';
+import { ColorTrack } from '../ColorTrack/ColorTrack';
 import './Overlay.css';
+import { ColorContainer } from '../ColorContainer/ColorContainer';
 
 export const Overlay: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,17 +28,33 @@ export const Overlay: FC = () => {
     });
   };
 
+  const overlayClasses = classNames('overlay', {
+    'overlay-open': isOpen,
+    'eye-dropper-active': eyeDropperActive
+  });
+
+  const contentClasses = classNames('content', {
+    'content-shown': isOpen
+  });
+
   return (
-    <article id='css-toolbox-overlay' className={`overlay ${isOpen ? 'overlay-open' : ''} ${eyeDropperActive ? 'eye-dropper-active' : ''}`}>
-      <div id='css-toolbox-content' className={`content ${isOpen ? 'content-shown' : ''}`}>
+    <article id='css-toolbox-overlay' className={overlayClasses}>
+      <div id='css-toolbox-content' className={contentClasses}>
         <nav className='navigation'>
           <img src={eyeDropperIcon} alt="Eye Dropper Icon" onClick={handleEyeDropperClick}/>
         </nav>
 
-        <br/>
+        <ColorContainer color={eyeDropperColor} roundCorners={{
+          topLeft: true,
+          topRight: true,
+          bottomLeft: false,
+          bottomRight: false
+        }}/>
 
-        <div style={{ backgroundColor: eyeDropperColor, borderRadius: '5px', width: '100px', height: '100px' }}>
-          {eyeDropperColor}
+        <div className='color-tracks'>
+          <ColorTrack color={eyeDropperColor} mode="tints" />
+          <ColorTrack color={eyeDropperColor} mode="shades" />
+          <ColorTrack color={eyeDropperColor} mode="tones" />
         </div>
       </div>
     </article>
