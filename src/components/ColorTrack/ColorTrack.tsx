@@ -55,10 +55,10 @@ export const ColorTrack: FC<Props> = ({ mode, color, renderOriginalColor = false
         const nb = Math.round(b + (128 - b) * ratio);
         colorsArr.push(rgbToHex(nr, ng, nb));
       }
+    }
 
-      if (!renderOriginalColor) {
-        colorsArr.unshift(color);
-      }
+    if (!renderOriginalColor) {
+      colorsArr.shift();
     }
 
     return colorsArr;
@@ -67,7 +67,7 @@ export const ColorTrack: FC<Props> = ({ mode, color, renderOriginalColor = false
   return (
     <div>
       {colors.map((col, i) => (
-        <ColorContainer key={`${col}_${mode}`} color={col} roundCorners={ i === steps - 1 ? lastColorRoundCorners : regularColorRoundCorners }/>
+        <ColorContainer key={`${col}_${mode}_${i}`} color={col} roundCorners={ i === steps - 1 ? lastColorRoundCorners : regularColorRoundCorners }/>
       ))}
     </div>
   );

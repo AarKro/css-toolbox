@@ -2,8 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import eyeDropperIcon from '@/assets/eyeDropper.svg';
 import { ColorTrack } from '../ColorTrack/ColorTrack';
-import './Overlay.css';
 import { ColorContainer } from '../ColorContainer/ColorContainer';
+import './Overlay.css';
 
 export const Overlay: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
