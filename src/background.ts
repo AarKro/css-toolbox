@@ -34,7 +34,7 @@ chrome.action.onClicked.addListener(async (tab) => {
 
     // open or close overlay
     if (nextState === 'ON') {
-      await chrome.scripting.executeScript({
+      await chrome.scripting.executeScript({ 
         target: { tabId: tab.id || 0 },
         func: openOverlay,
       });
@@ -44,5 +44,15 @@ chrome.action.onClicked.addListener(async (tab) => {
         func: closeOverlay
       });
     }
+  }
+});
+
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+  if (overlayRegistered && changeInfo.status === "complete" && tab.url && /^https?:/.test(tab.url)) {
+    await chrome.scripting.executeScript({
+      target: { tabId },
+      files: [registerOverlayUrl],
+      injectImmediately: true,
+    });
   }
 });
